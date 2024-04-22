@@ -8,7 +8,7 @@
   <artifactId>joda-time</artifactId>
   <packaging>jar</packaging>
   <name>Joda-Time</name>
-  <version>2.12.7</version>
+  <version>100.0.0</version>
   <description>Date and time library to replace JDK date handling</description>
   <url>https://www.joda.org/joda-time/</url>
 
@@ -414,6 +414,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
+        <configuration>
+                <source>8</source>
+                <target>8</target>
+            </configuration>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -857,22 +861,19 @@
   </reporting>
 
   <!-- ==================================================================== -->
-  <distributionManagement>
-    <repository>
-      <id>sonatype-joda-staging</id>
-      <name>Sonatype OSS staging repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-      <layout>default</layout>
-    </repository>
-    <snapshotRepository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>sonatype-joda-snapshot</id>
-      <name>Sonatype OSS snapshot repository</name>
-      <url>https://oss.sonatype.org/content/repositories/joda-snapshots</url>
-      <layout>default</layout>
-    </snapshotRepository>
-    <downloadUrl>https://oss.sonatype.org/content/repositories/joda-releases</downloadUrl>
-  </distributionManagement>
+  <!-- Distribution Management section -->
+    <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <name>maven-releases</name>
+            <url>${env.DISTRIBUTION_URL}/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot-repo</id>
+            <name>Internal Snapshot Repository</name>
+            <url>${env.DISTRIBUTION_URL}/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
   <!-- ==================================================================== -->
   <profiles>
