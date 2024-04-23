@@ -19,9 +19,14 @@ jobs:
                 NEXUS_USER: ${{ secrets.NEXUS_USER }}
                 NEXUS_PASS: ${{ secrets.NEXUS_PASS }}
                 DISTRIBUTION_URL: ${{ secrets.DISTRIBUTION_URL }}
+
+            - name: Get Version
+              run: echo "JODA_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
             - name: Repository Dispatch
               uses: peter-evans/repository-dispatch@v3
               with:
                 token: ${{ secrets.PAT }}
                 repository: meher-liatrio/spring-petclinic
                 event-type: dispatch-event
+                client-payload: '{"VERSION": "${{ env.JODA_VERSION }}"}'
